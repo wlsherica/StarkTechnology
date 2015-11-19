@@ -53,3 +53,19 @@ Finally, we can apply this function to fix our bad JSON string. Then we will suc
 input_rdd.collect()
 sqlContext.sql("select * from mytable").show()
 ```
+
+### Number of data partitions?
+
+There are several ways to find the partitions information, for example, viewing task stages with Spark UI
+```python
+inputdata = sc.parallelize(range(1,100))
+inputdata.count()
+```
+Or inspect RDD partitions programatically in python,
+```python
+inputdata.getNumPartitions()
+```
+How about scala?
+```scala
+inputdata.partitions.size
+```
