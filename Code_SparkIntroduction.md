@@ -1,5 +1,5 @@
-Introduction to Spark [![Spark](http://spark.apache.org/docs/1.4.1/img/spark-logo-hd.png)](http://spark.apache.org/docs/1.4.1/programming-guide.html "Spark")
-==========
+Introduction to Spark
+========
 
 ## How to install
 
@@ -8,7 +8,7 @@ Introduction to Spark [![Spark](http://spark.apache.org/docs/1.4.1/img/spark-log
 ## Best Practice
 ### Bad input data
 
-Let's check this bad input data in pyspark.
+Check this bad input data in pyspark.
 
 ```python
 input_rdd = sc.parallelize(["{\"value\": 1}",  # ok
@@ -29,7 +29,7 @@ sqlContext.sql("select * from mytable").show()
 ```
 Instead, we could fix this issue with python function,
 ```python
-#don't for get to import json first
+#do not forget to import json first
 import json
 def try_correct_json(json_string):
   try:
@@ -46,10 +46,10 @@ def try_correct_json(json_string):
 Then, use flatMap to apply our fixing function,
 ```python
 corrected_input_rdd = input_rdd.flatMap(try_correct_json)
-sqlContext.jsonRDD(corrected_input_rdd).registerTempTable("valueTable")
+sqlContext.jsonRDD(corrected_input_rdd).registerTempTable("mytable")
 ```
-Finally, we can apply this function to fix our bad JSON string. Then we'll succeed to read these three lines.
+Finally, we can apply this function to fix our bad JSON string. Then we will succeed to read these three lines.
 ```python
 input_rdd.collect()
-sqlContext.sql("select * from myable").show()
+sqlContext.sql("select * from mytable").show()
 ```
