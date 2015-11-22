@@ -19,7 +19,7 @@ echo "export PATH=$PATH:/home/cloudera/spark-1.4.1-bin-hadoop2.6/bin" >> ~/.bash
 
 ## Set SPARK_HOME
 ```shell
-export SPARK_HOME=/home/cloudera/spark-1.5.2-bin-hadoop2.6
+export SPARK_HOME=/home/cloudera/spark-1.4.1-bin-hadoop2.6
 ```
 
 ## Copy hive-site.xml
