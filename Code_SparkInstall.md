@@ -7,13 +7,18 @@ Java 1.7
 
 ### Spark 1.4.1
 ## Get ur weapon
+
+Spark [download](http://spark.apache.org/downloads.html)
 ```shell
+# this will download a compressed TAR file
 wegt http://www.apache.org/dyn/closer.lua/spark/spark-1.4.1/spark-1.4.1-bin-hadoop2.6.tgz
+# untar the file
 tar zxvf spark-1.4.1-bin-hadoop2.6.tgz
 ```
 
 ## 
 ```shell
+#  set path variable
 echo "export PATH=$PATH:/home/cloudera/spark-1.4.1-bin-hadoop2.6/bin" >> ~/.bashrc
 ```
 
