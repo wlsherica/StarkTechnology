@@ -3,6 +3,8 @@ Introduction to Spark
 
 ## How to install
 
+Please check [Code_SparkInstall](https://github.com/wlsherica/StarkTechnology/blob/master/Code_SparkInstall.md) out.
+
 ## RDD operations
 
 ## Best Practice
