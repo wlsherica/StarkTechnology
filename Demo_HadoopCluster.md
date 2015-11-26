@@ -87,20 +87,28 @@ sudo mv hadoop-2.7.1 /usr/local
 ```
 
 ```shell
+cd /usr/local
 mv hadoop-2.7.1 hadoop
 ```
 
 For simplicity, rename it.
 ```shell
 vim ~/.profile
-export HADOOP_HOME=/usr/local/hadoop-2.7.1
+export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin
 
-export HADOOP_PREFIX=/home/ubuntu/hadoop?
+export HADOOP_PREFIX=/usr/local/hadoop
 #Set JAVA_HOME
-export JAVA_HOME=/usr/lib/jvm/java-7-oracle?
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 # Add Hadoop bin/ directory to path
 export PATH=$PATH:$HADOOP_PREFIX/bin
+```
+How to find JAVA path?
+```shell
+whereis java
+ll /usr/bin/java
+ll /etc/alternatives/java
+# Voila! /usr/lib/jvm/java-8-oracle
 ```
 
 Repeat command above for remaining machines (dn1, dn2),
