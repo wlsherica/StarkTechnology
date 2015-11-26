@@ -62,6 +62,13 @@ ssh -i starttech.pem dn1 'cat ~/.ssh/id_rsa.pub' >> ~/.ssh/authorized_keys
 cat ~/.ssh/id_rsa.pub | ssh -i starttech.pem dn1 'cat >> ~/.ssh/authorized_keys'
 ```
 
+```shell
+chmod 644 ~/.ssh/authorized_keys
+eval `ssh-agent`
+ssh-add your.pem
+```
+Note that, ssh session will be lost upon shell exit and you have repeat ssh-agent and ssh-add commands.
+
 Test it,
 ```shell
 ssh localhost
@@ -115,9 +122,17 @@ Check the hadoop version
 hadoop version
 ```
 
-hdfs-site.xml
-hive-site.xml
-yarn-site.xml
+Make sure all conf files scp to all machines
+```shell
+# add JAVA_HOME
+vim hadoop-env.sh
+#  dfs.replication=3, dfs.permissions.enabled = false
+vim hdfs-site.xml
+# fs.default.name
+vim core-site.xml 
+# mapred.job.tracker for jobtracker configuration
+vim mapred-site.xml
+```
 
 Modify slaves
 ```shell
@@ -127,12 +142,12 @@ vim slaves
 -> localhost
 ```
 
-vim hdfs-site.xml
-vim core-site.xml
-+> hadoop-2.7.1
+Move configuration files to datanodes, note that masters file on slave machine is going to be empty, and the ‘slaves’ file at datanode contains only its own IP and not of any other datanode in the cluster.
 
-scp -r /usr/local/hadoop-2.7.1 dn2:/usr/local
-scp -r /usr/local/hadoop-2.7.1 dn1:/usr/local
+```shell
+scp -r /usr/local/hadoop dn2:/usr/local
+scp -r /usr/local/hadoop dn1:/usr/local
+```
 
 ```shell
 hadoop namenode -format
@@ -152,4 +167,13 @@ $HADOOP_HOME/sbin/stop-dfs.sh
 Tips
 ```shell
 ssh dn1 "rm -r /usr/local/hadoop-2.7.1/datanode.dir/"
+```
+
+URL
+[Namenode status](http://publicDNS:50070/dfshealth.jsp)
+[Jobtracker status](http://publicDNS:50030/jobtracker.jsp)
+
+## Testing 
+```shell
+~/hadoop$ hadoop jar hadoop-examples-1.2.1.jar pi 10 1000000
 ```
