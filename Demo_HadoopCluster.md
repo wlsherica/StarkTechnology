@@ -44,7 +44,7 @@ jps
 ```
 ## Modify /etc/hosts
 ```shell
-vim /etc/hosts
+sudo vim /etc/hosts
 ```
 Then, add all machines' ip and hostname on it.
 
