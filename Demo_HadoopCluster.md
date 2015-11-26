@@ -87,7 +87,7 @@ sudo mv hadoop-2.7.1 /usr/local
 ```
 
 ```shell
-mv hadoop-1.2.1 hadoop
+mv hadoop-2.7.1 hadoop
 ```
 
 For simplicity, rename it.
