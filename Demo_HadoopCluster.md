@@ -3,11 +3,10 @@
 How to Set Up a Multi-Node Hadoop Cluster on Amazon EC2?
 
 ## Before we go
-- NameNode (Master)
+- NameNode (master)
 - SecondaryNameNode
-- DataNode (Slave1)
-- DataNode (Slave2)
-And, 
+- DataNode (slave1)
+- DataNode (slave2)
 - [Amazon AWS Account](http://aws.amazon.com/)
 - Putty on Windows or Terminal on Mac
 
