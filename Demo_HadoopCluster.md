@@ -15,7 +15,7 @@ First, we'll create AWS instances and related infrastructure, then complete Hado
 ## On AWS 
 - Get Amazon AWS account with credit card
 - Launch instance
-- Select AMI, Ubuntu Server 12.04.3  Server 64-bit OS for example
+- Select AMI, Ubuntu Server 14.04 LTS (HVM), SSD Volume Type for example
 - Select instance type
 - Configure number of instances
 - Add storage, min=8G
