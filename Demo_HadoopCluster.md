@@ -29,7 +29,7 @@ First, we'll create AWS instances and related infrastructure, then complete Hado
 chmod 400 your.pem
 ssh -i "your.pem" ubuntu@xx.xx.xx.xx
 ```
-## Download Java 8
+## Download Java 8 on all machines
 ```shell
 #nn, dn1, dn2
 sudo apt-get install -y python-software-properties 
@@ -51,14 +51,18 @@ Then, add all machines' ip and hostname on it.
 ## Genkey for all machines
 ```shell
 chmod 644 ~/.ssh/authorized_keys
+# copy .pem from local system to nn 
+$ scp -i ~/Downloads/your.pem ~/Downloads/your.pem ubuntu@<nn-ip>:~/
 
-$ scp -i ~/Downloads/starttech.pem ~/Downloads/starttech.pem ubuntu@54.254.213.15:~/
-starttech.pem
-cat .ssh/id_rsa.pub >>.ssh/authorized_keys
+cp ~/StarkTech.pem ~/.ssh/
 
-scp -i starttech.pem ~/.ssh/
-ssh -i starttech.pem dn1 'cat ~/.ssh/id_rsa.pub' >> ~/.ssh/authorized_keys
-cat ~/.ssh/id_rsa.pub | ssh -i starttech.pem dn1 'cat >> ~/.ssh/authorized_keys'
+# create the public fingerprint on namenode
+ssh-keygen -f ~/.ssh/id_rsa -t rsa -P ""
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+# copy the public fingerprint to each datanodes
+cat ~/.ssh/id_rsa.pub | ssh dn1 'cat >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh dn2 'cat >> ~/.ssh/authorized_keys'
 ```
 
 ```shell
@@ -73,10 +77,11 @@ Test it,
 ssh localhost
 ```
 
-## Download Hadoop 
+## Download Hadoop then install Hadoop onto all the node
 You may check all Hadoop version [here](http://ftp.twaren.net/Unix/Web/apache/hadoop/common/)
 
 ```shell
+cd ~
 wget http://ftp.twaren.net/Unix/Web/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
 ```
 
@@ -97,11 +102,11 @@ vim ~/.profile
 ```
 Modify these variables
 ```shell
-export HADOOP_CONF=/usr/local/hadoop/conf
 export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin
-
 export HADOOP_PREFIX=/usr/local/hadoop
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+
 #Set JAVA_HOME
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 # Add Hadoop bin/ directory to path
@@ -117,9 +122,8 @@ ll /etc/alternatives/java
 
 Repeat command above for remaining machines (dn1, dn2),
 ```shell
-source ~/.bashrc
+source ~/.profile
 echo $HADOOP_PREFIX
-echo $HADOOP_CONF
 ```
 
 Config setting,
@@ -141,8 +145,6 @@ vim hadoop-env.sh
 vim hdfs-site.xml
 # fs.default.name
 vim core-site.xml 
-# mapred.job.tracker for jobtracker configuration
-vim mapred-site.xml
 ```
 
 Modify slaves
@@ -158,12 +160,14 @@ Move configuration files to datanodes, note that masters file on slave machine i
 ```shell
 scp -r /usr/local/hadoop dn2:/usr/local
 scp -r /usr/local/hadoop dn1:/usr/local
-```
 
+scp ~/.profile dn1:~/
+scp ~/.profile dn2:~/
+```
+Format the namenode 
 ```shell
 hadoop namenode -format
 ```
-
 GO!
 ```shell
 #start dfs
@@ -174,17 +178,17 @@ If you'd like to stop service,
 ```shell
 $HADOOP_HOME/sbin/stop-dfs.sh
 ```
-
-Tips
+## Tips
 ```shell
 ssh dn1 "rm -r /usr/local/hadoop-2.7.1/datanode.dir/"
 ```
-
-URL
-[Namenode status](http://publicDNS:50070/dfshealth.jsp)
-[Jobtracker status](http://publicDNS:50030/jobtracker.jsp)
-
-## Testing 
 ```shell
-~/hadoop$ hadoop jar hadoop-examples-1.2.1.jar pi 10 1000000
+hadoop fsck /
 ```
+## start up YARN
+```shell
+$HADOOP_HOME/sbin/start-yarn.sh
+```
+## URL
+- Namenode status http://publicDNS:50070/dfshealth.jsp
+- Monitor each job by: http://publicDNS:8088/cluster
