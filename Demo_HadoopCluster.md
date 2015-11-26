@@ -94,6 +94,10 @@ mv hadoop-2.7.1 hadoop
 For simplicity, rename it.
 ```shell
 vim ~/.profile
+```
+Modify these variables
+```shell
+export HADOOP_CONF=/usr/local/hadoop/conf
 export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin
 
