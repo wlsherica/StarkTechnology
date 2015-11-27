@@ -47,7 +47,7 @@ data = sc.textFile("hdfs://quickstart.cloudera:8020/user/cloudera/people.txt")
 
 Upload spark example data to HDFS (default)
 ```shell
-hadoop fs -put /home/cloudera/spark-1.5.2-bin-hadoop2.6/examples/src/main/resources/people.txt .
+hadoop fs -put /home/cloudera/spark-1.4.1-bin-hadoop2.6/examples/src/main/resources/people.txt .
 ```
 Test it in pyspark
 ```python
