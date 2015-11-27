@@ -43,7 +43,7 @@ data = sc.textFile("hdfs://quickstart.cloudera:8020/user/cloudera/people.txt")
 ```
 
 ### Spark 1.3.0 
-# Connected hdfs folder
+## Connected hdfs folder
 
 Upload spark example data to HDFS (default)
 ```shell
@@ -53,4 +53,29 @@ Test it in pyspark
 ```python
 file = sc.textFile("/user/cloudera/people.txt")
 file.take(1)
+```
+
+## Set standalone cluster
+```shell
+cd /usr/lib/spark
+# modify slave
+vim conf/slaves
+```
+Set config
+```shell
+vim conf/spark-env.sh
+
+export SPARK_WORKER_CORES=1
+export SPARK_WORDER_INSTANCES=2
+export SPARK_WORKER_MEMORY=2g
+```
+Then launch master and slave
+```shell
+# launch master and slave
+sbin/start-all.sh
+```
+Master URL: http://localhost:18081
+## Connect with Cluster Master
+```shell
+bin/spark-shell --master spark://quickstart.cloudera:7077
 ```
