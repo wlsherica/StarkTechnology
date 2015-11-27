@@ -185,10 +185,10 @@ ssh dn1 "rm -r /usr/local/hadoop-2.7.1/datanode.dir/"
 ```shell
 hadoop fsck /
 ```
-## start up YARN
+## Start up YARN
 ```shell
 $HADOOP_HOME/sbin/start-yarn.sh
 ```
-## URL
+## Tracking URL
 - Namenode status http://publicDNS:50070/dfshealth.jsp
 - Monitor each job by: http://publicDNS:8088/cluster
