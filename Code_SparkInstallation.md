@@ -1,9 +1,9 @@
 Spark Installation on Cloudera Quick Start VM
 ========
 
-Spark 1.3.0 (default)
-Python 2.6.6
-Java 1.7
+- Spark 1.3.0 (default)
+- Python 2.6.6
+- Java 1.7
 
 ### Spark 1.4.1
 ## Get ur weapon
