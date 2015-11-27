@@ -129,7 +129,7 @@ echo $HADOOP_PREFIX
 Config setting,
 ```shell
 sudo apt-get install git
-git clone https://github.com/youngce/hadoop-config.git
+git clone https://github.com/wlsherica/StarkTechnology.git
 ```
 
 Check the hadoop version
