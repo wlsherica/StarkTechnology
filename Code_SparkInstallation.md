@@ -38,6 +38,7 @@ ls /etc/alternatives/hadoop-conf/core-site.xml
 ## Test your hdfs path in pyspark
 ```python
 data = sc.textFile("hdfs://quickstart.cloudera:8020/user/cloudera/people.txt")
+data.take(3)
 ```
 
 ### Spark 1.3.0 
@@ -62,7 +63,7 @@ vim conf/slaves
 Set config
 ```shell
 cd /etc/alternatives/spark-conf
-vim conf/spark-env.sh
+sudo vim conf/spark-env.sh
 
 export SPARK_WORKER_CORES=1
 export SPARK_WORDER_INSTANCES=2
@@ -70,17 +71,23 @@ export SPARK_WORKER_MEMORY=2g
 ```
 Then launch master and slave
 ```shell
+cd /usr/lib/spark
+sudo /etc/init.d/spark-worker restart
 # launch master and slave
-sbin/start-all.sh
+sudo sbin/start-all.sh
 ```
 Master URL: http://localhost:18081
 ```shell
 # check the local VM identifier
 sudo jps
 ```
-How to submit job?
+How to submit job with cluster?
 ```shell
-./bin/spark-submit --master spark://quickstart.cloudera:7077 ~/spark-1.4.1-bin-hadoop2.6/example/src/main/python/pi.py
+sudo ./bin/spark-submit --master spark://quickstart.cloudera:7077 ~/spark-1.4.1-bin-hadoop2.6/example/src/main/python/pi.py
+```
+How to submit job without cluster?
+```shell
+./bin/spark-submit ~/spark-1.4.1-bin-hadoop2.6/example/src/main/python/pi.py
 ```
 ## Connect with Cluster Master
 ```shell
