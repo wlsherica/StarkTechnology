@@ -61,6 +61,7 @@ vim conf/slaves
 ```
 Set config
 ```shell
+cd /etc/alternatives/spark-conf
 vim conf/spark-env.sh
 
 export SPARK_WORKER_CORES=1
