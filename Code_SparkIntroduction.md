@@ -6,6 +6,70 @@ Introduction to Spark
 Please check [Code_SparkInstall](https://github.com/wlsherica/StarkTechnology/blob/master/Code_SparkInstall.md) out.
 
 ## RDD operations
+Let's rock in our fruits journey :p
+#### map
+```python
+lines = sc.parallelize(["apple", "banana", "strawberry", "lemon", "apple", "banana", "grapes", "watermelon", "strawberry", "lemon", "lemon"])
+pairs = lines.map(lambda s: (s, 1))
+fruit1 = pairs.reduceByKey(lambda a, b: a + b)
+#[('strawberry', 2), ('watermelon', 1), ('lemon', 3), ('apple', 2), ('banana', 2), ('grapes', 1)]
+```
+#### mapValues
+```python
+x = sc.parallelize([("var1", ["apple", "banana", "lemon"]), ("var2", ["grapes"]), ("var3", ["watermelon", "strawberry"])])
+x.mapValues(lambda x: len(x)).collect()
+```
+#### reduce
+```python
+sc.parallelize([10, 20, 30, 40, 50]).reduce(lambda a, b: a + b)
+
+#another way 
+from operator import add
+sc.parallelize([10, 20, 30, 40, 50]).reduce(add)
+```
+How to sum up the fruits' values?
+```python
+fruit1.values().reduce(lambda x,y : x+y)
+```
+How to return an RDD with the keys of each tuple?
+```python
+fruit1.keys().collect()
+```
+#### reduceByKey
+```python
+x = sc.parallelize([("apple", 1), ("lemon", 2), ("apple", 3), ("apple", 9), ("lemon", 1), ("banana", 4), ("banana", 8)])
+fruit2 = x.reduceByKey(lambda x, y: x + y)
+fruit2.collect()
+#[('lemon', 3), ('apple', 13), ('banana', 12)]
+```
+#### groupByKey
+```python
+sorted(rdd.groupByKey().mapValues(len).collect())
+```
+#### filter
+```python
+fruit1.take(3)
+fruit1.filter(lambda x: x[1] > 2).collect()
+```
+#### takeOrdered
+```python
+sc.parallelize([5,4,3,1,2,6,7,9]).takeOrdered(6)
+```
+#### join
+```python
+# inner join
+fruit1.join(fruit2).collect()
+```
+#### union
+```python
+fruit1.union(fruit2).collect()
+```
+#### cache
+```python
+fruit1.cache()
+fruit1.persist().is_cached
+fruit1.unpersist()
+```
 
 ## Best Practice
 ### Bad input data
