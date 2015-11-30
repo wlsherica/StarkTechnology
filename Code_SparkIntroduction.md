@@ -3,7 +3,7 @@ Introduction to Spark
 
 ## How to install
 
-Please check [Code_SparkInstall](https://github.com/wlsherica/StarkTechnology/blob/master/Code_SparkInstall.md) out.
+Please check [Code_SparkInstallation](https://github.com/wlsherica/StarkTechnology/blob/master/Code_SparkInstallation.md) out.
 
 ## RDD operations
 Let's rock in our fruits journey :p
