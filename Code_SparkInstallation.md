@@ -15,13 +15,11 @@ wegt http://www.apache.org/dyn/closer.lua/spark/spark-1.4.1/spark-1.4.1-bin-hado
 # untar the file
 tar zxvf spark-1.4.1-bin-hadoop2.6.tgz
 ```
-
 ## 
 ```shell
 #  set path variable
 echo "export PATH=$PATH:/home/cloudera/spark-1.4.1-bin-hadoop2.6/bin" >> ~/.bashrc
 ```
-
 ## Set SPARK_HOME
 ```shell
 export SPARK_HOME=/home/cloudera/spark-1.4.1-bin-hadoop2.6
@@ -75,6 +73,14 @@ Then launch master and slave
 sbin/start-all.sh
 ```
 Master URL: http://localhost:18081
+```shell
+# check the local VM identifier
+sudo jps
+```
+How to submit job?
+```shell
+./bin/spark-submit --master spark://quickstart.cloudera:7077 ~/spark-1.4.1-bin-hadoop2.6/example/src/main/python/pi.py
+```
 ## Connect with Cluster Master
 ```shell
 bin/spark-shell --master spark://quickstart.cloudera:7077
