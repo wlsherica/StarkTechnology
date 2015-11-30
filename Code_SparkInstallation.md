@@ -29,6 +29,10 @@ export SPARK_HOME=/home/cloudera/spark-1.4.1-bin-hadoop2.6
 ```shell
 sudo cp /etc/hive/conf.dist/hive-site.xml $SPARK_HOME/conf
 ```
+or you may,
+```shell
+cp /etc/alternatives/spark-conf/* spark-1.4.1-bin-hadoop2.6/conf/
+```
 
 ## Find Hadoop HDFS path
 ```shell
