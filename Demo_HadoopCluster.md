@@ -29,13 +29,15 @@ First, we'll create AWS instances and related infrastructure, then complete Hado
 chmod 400 your.pem
 ssh -i "your.pem" ubuntu@xx.xx.xx.xx
 ```
-## Download Java 8 on all machines
+## Download Java 7 on all machines
 ```shell
 #nn, dn1, dn2
 sudo apt-get install -y python-software-properties 
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracle-java8-installer
+sudo apt-get install openjdk-7-jdk
+# this is for java8
+#sudo apt-get install oracle-java8-installer
 ```
 Test it for safety!
 ```shell
@@ -52,7 +54,7 @@ Then, add all machines' ip and hostname on it.
 ```shell
 chmod 644 ~/.ssh/authorized_keys
 # copy .pem from local system to nn 
-$ scp -i ~/Downloads/your.pem ~/Downloads/your.pem ubuntu@<nn-ip>:~/
+scp -i ~/Downloads/your.pem ~/Downloads/your.pem ubuntu@<nn-public-ip>:~/
 
 cp ~/StarkTech.pem ~/.ssh/
 
@@ -60,29 +62,30 @@ cp ~/StarkTech.pem ~/.ssh/
 ssh-keygen -f ~/.ssh/id_rsa -t rsa -P ""
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-# copy the public fingerprint to each datanodes
-cat ~/.ssh/id_rsa.pub | ssh dn1 'cat >> ~/.ssh/authorized_keys'
-cat ~/.ssh/id_rsa.pub | ssh dn2 'cat >> ~/.ssh/authorized_keys'
-```
+#
+scp -i ~/.ssh/StarkTech.pem ~/.ssh/StarkTech.pem ubuntu@<dn1-public-ip>:~/.ssh/
 
-```shell
-chmod 644 ~/.ssh/authorized_keys
-eval `ssh-agent`
-ssh-add your.pem
+# copy the public fingerprint to each datanodes
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/your.pem dn1 'cat >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/your.pem dn2 'cat >> ~/.ssh/authorized_keys'
 ```
-Note that, ssh session will be lost upon shell exit and you have repeat ssh-agent and ssh-add commands.
 
 Test it,
 ```shell
 ssh localhost
+ssh dn1
+ssh dn2
 ```
 
-## Download Hadoop then install Hadoop onto all the node
+## Download Hadoop then install Hadoop onto all the nodes
 You may check all Hadoop version [here](http://ftp.twaren.net/Unix/Web/apache/hadoop/common/)
 
 ```shell
+# at nn
 cd ~
 wget http://ftp.twaren.net/Unix/Web/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
+scp ~/hadoop-2.7.1.tar.gz dn1:~/
+scp ~/hadoop-2.7.1.tar.gz dn2:~/
 ```
 
 Unzip the files.
@@ -93,7 +96,7 @@ sudo mv hadoop-2.7.1 /usr/local
 
 ```shell
 cd /usr/local
-mv hadoop-2.7.1 hadoop
+sudo mv hadoop-2.7.1 hadoop
 ```
 
 For simplicity, rename it.
@@ -108,7 +111,8 @@ export HADOOP_PREFIX=/usr/local/hadoop
 export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
 
 #Set JAVA_HOME
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+#java-8-oracle for java8
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 # Add Hadoop bin/ directory to path
 export PATH=$PATH:$HADOOP_PREFIX/bin
 ```
@@ -117,7 +121,7 @@ How to find JAVA path?
 whereis java
 ll /usr/bin/java
 ll /etc/alternatives/java
-# Voila! /usr/lib/jvm/java-8-oracle
+# Voila! 
 ```
 
 Repeat command above for remaining machines (dn1, dn2),
@@ -128,23 +132,31 @@ echo $HADOOP_PREFIX
 
 Config setting,
 ```shell
+cd /usr/local/hadoop/etc
 sudo apt-get install git
 git clone https://github.com/wlsherica/StarkTechnology.git
+mv StarkTechnology/hadoop-config/ .
+rm -rf StarkTechnology
 ```
-
-Check the hadoop version
+Move hadoop-config
 ```shell
-hadoop version
+mv hadoop hadoop_ori
+mv hadoop-config hadoop
 ```
 
 Make sure all conf files scp to all machines
 ```shell
 # add JAVA_HOME
 vim hadoop-env.sh
-#  dfs.replication=3, dfs.permissions.enabled = false
+# dfs.replication=3, dfs.permissions.enabled = false
 vim hdfs-site.xml
-# fs.default.name
+# check fs.default.name
 vim core-site.xml 
+```
+
+Check the hadoop version
+```shell
+hadoop version
 ```
 
 Modify slaves
@@ -173,7 +185,12 @@ GO!
 #start dfs
 $HADOOP_HOME/sbin/start-dfs.sh
 ```
-
+Check it out
+```shell
+jps
+ssh dn1 'jps'
+ssh dn1 'jps'
+```
 If you'd like to stop service,
 ```shell
 $HADOOP_HOME/sbin/stop-dfs.sh
