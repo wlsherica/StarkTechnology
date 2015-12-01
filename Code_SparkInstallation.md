@@ -97,5 +97,17 @@ How to submit job without cluster?
 ```shell
 bin/spark-shell --master spark://quickstart.cloudera:7077
 ```
-# How to SSH to VM from your laptop?
-![VM network setting]()
+## How to SSH to VM from your laptop?
+First, check in to networking on VM
+
+![VM network setting](https://github.com/wlsherica/StarkTechnology/blob/master/pic/vm_setting_before.png)
+
+Then, modify `Attached to`, 橋接介面卡 and `Promiscuous Mode`混合模式
+
+![VM network setting](https://github.com/wlsherica/StarkTechnology/blob/master/pic/vm_setting_after.png)
+
+Finally, SSH this VM from your local system.
+
+```shell
+ssh cloudera@<VM ip>
+```
