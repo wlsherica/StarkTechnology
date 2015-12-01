@@ -97,3 +97,5 @@ How to submit job without cluster?
 ```shell
 bin/spark-shell --master spark://quickstart.cloudera:7077
 ```
+# How to SSH to VM from your laptop?
+![VM network setting]()
