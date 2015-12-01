@@ -76,6 +76,11 @@ ssh localhost
 ssh dn1
 ssh dn2
 ```
+Do not forget scp /etc/hosts to all dn
+```shell
+scp /etc/hosts dn1 /etc/hosts
+scp /etc/hosts dn2 /etc/hosts
+```
 
 ## Download Hadoop then install Hadoop onto all the nodes
 You may check all Hadoop version [here](http://ftp.twaren.net/Unix/Web/apache/hadoop/common/)
