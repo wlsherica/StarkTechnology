@@ -24,10 +24,11 @@ First, we'll create AWS instances and related infrastructure, then complete Hado
 - Launch instance and create security pair
 - Launching instances and waiting for a while
 
+### Please replace "StarkTech.pem" to your own pem.
 ## On command line
 ```shell
-chmod 400 your.pem
-ssh -i "your.pem" ubuntu@xx.xx.xx.xx
+chmod 400 StarkTech.pem
+ssh -i "StarkTech.pem" ubuntu@xx.xx.xx.xx
 ```
 ## Download Java 7 on all machines
 ```shell
@@ -54,20 +55,21 @@ Then, add all machines' ip and hostname on it.
 ```shell
 chmod 644 ~/.ssh/authorized_keys
 # copy .pem from local system to nn 
-scp -i ~/Downloads/your.pem ~/Downloads/your.pem ubuntu@<nn-public-ip>:~/
+scp -i ~/Downloads/StarkTech.pem ~/Downloads/StarkTech.pem ubuntu@<nn-public-ip>:~/
 
 cp ~/StarkTech.pem ~/.ssh/
+chmod 400 ~/.ssh/StarkTech.pem
 
 # create the public fingerprint on namenode
 ssh-keygen -f ~/.ssh/id_rsa -t rsa -P ""
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-#
+# scp .pem to dn1 & dn2
 scp -i ~/.ssh/StarkTech.pem ~/.ssh/StarkTech.pem ubuntu@<dn1-public-ip>:~/.ssh/
 
 # copy the public fingerprint to each datanodes
-cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/your.pem dn1 'cat >> ~/.ssh/authorized_keys'
-cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/your.pem dn2 'cat >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/StarkTech.pem dn1 'cat >> ~/.ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/StarkTech.pem dn2 'cat >> ~/.ssh/authorized_keys'
 ```
 
 Test it,
@@ -76,11 +78,7 @@ ssh localhost
 ssh dn1
 ssh dn2
 ```
-Do not forget scp /etc/hosts to all dn
-```shell
-scp /etc/hosts dn1 /etc/hosts
-scp /etc/hosts dn2 /etc/hosts
-```
+Do not forget replicate /etc/hosts to all dn!!!
 
 ## Download Hadoop then install Hadoop onto all the nodes
 You may check all Hadoop version [here](http://ftp.twaren.net/Unix/Web/apache/hadoop/common/)
@@ -151,12 +149,12 @@ mv hadoop-config hadoop
 
 Make sure all conf files scp to all machines
 ```shell
-# add JAVA_HOME
-vim hadoop-env.sh
-# dfs.replication=3, dfs.permissions.enabled = false
-vim hdfs-site.xml
+# add JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+vim hadoop/hadoop-env.sh
+# dfs.replication=3
+vim hadoop/hdfs-site.xml
 # check fs.default.name
-vim core-site.xml 
+vim hadoop/core-site.xml 
 ```
 
 Check the hadoop version
@@ -166,7 +164,7 @@ hadoop version
 
 Modify slaves
 ```shell
-vim slaves
+vim hadoop/slaves
 +> dn1
 +> dn2
 -> localhost
