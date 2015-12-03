@@ -15,8 +15,9 @@ Training materials for Stark Technology, 2015
 - Python
 
 ## Environment
-- Cloudera Quick Start VM 5.4
-- Spark 1.4.1
+- [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+- [Cloudera Quick Start VM 5.4](http://www.cloudera.com/content/www/en-us/downloads/quickstart_vms/5-5.html)
+- [Spark 1.4.1](http://spark.apache.org/downloads.html)
 - Spark 1.3.0
 - Python 2.6.6
 
