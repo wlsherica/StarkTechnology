@@ -1,7 +1,7 @@
 #Steps to install ipython notebook on CDH 5.4
 
 ## Environment 
-
+- Cloudera quick start VM 5.4/5.5
 ps. Thanks to [Bryan's shell script](https://github.com/bryanyang0528/SparkTutorial/blob/cdh5.5/Installation/1_Python2.7.sh)
 
 ## Steps
