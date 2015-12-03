@@ -41,4 +41,5 @@ sudo pip install ipython[all]
 IPYTHON_OPTS="notebook --ip=0.0.0.0" ~/spark-1.4.1-bin-hadoop2.6/bin/pyspark
 
 ## In IPython notebook
-
+Try it.
+![get spark's sc](https://github.com/wlsherica/StarkTechnology/blob/master/pic/ipython_notebook.png)
