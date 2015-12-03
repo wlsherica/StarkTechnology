@@ -1,5 +1,7 @@
 # StarkTechnology
-Training materials for Stark Technology, 2015
+Training materials for Stark Technology, 2015.
+-------
+訓練教材是針對敦陽科技所設計。
 
 ## Objectives
 - Demo for Hadoop Cluster setup (AWS)
@@ -13,6 +15,7 @@ Training materials for Stark Technology, 2015
 ## Language
 - Scala
 - Python
+- Linux
 
 ## Environment
 - [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
