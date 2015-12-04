@@ -3,6 +3,10 @@ Training materials for Stark Technology, 2015.
 -------
 訓練教材是針對敦陽科技所設計。
 
+## Slides
+- Hadoop (HDFS, MapReduce)
+- [Introduction to Spark](https://speakerdeck.com/wlsherica/spark-introduction-2015)
+
 ## Objectives
 - Demo for Hadoop Cluster setup (AWS)
 - Review for Hadoop & HDFS
