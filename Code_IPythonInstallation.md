@@ -38,8 +38,17 @@ Install IPython notebook
 sudo pip install ipython[all]
 ```
 ## Test
+```shell
 IPYTHON_OPTS="notebook --ip=0.0.0.0" ~/spark-1.4.1-bin-hadoop2.6/bin/pyspark
-
+```
+or in your spark standalone cluster
+```shell
+IPYTHON_OPTS="notebook --ip=0.0.0.0" ~/spark-1.4.1-bin-hadoop2.6/bin/pyspark --master spark://ip:7077
+```
+or initial ipython notebook with specific config setting,
+```shell
+IPYTHON_OPTS="notebook --ip=0.0.0.0" ~/spark-1.4.1-bin-hadoop2.6/bin/pyspark --master spark://ip:7077 --executor-memory 3G --total-executor-cores 20 
+```
 ## In IPython notebook
 Try it.
 ![get spark's sc](https://github.com/wlsherica/StarkTechnology/blob/master/pic/ipython_notebook.png)
