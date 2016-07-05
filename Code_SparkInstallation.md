@@ -11,6 +11,7 @@ Spark Installation on Cloudera Quick Start VM
 Spark [download](http://spark.apache.org/downloads.html)
 ```shell
 # this will download a compressed TAR file
+# http://www.apache.org/dyn/closer.lua/spark/spark-1.6.2/spark-1.6.2.tgz
 wget http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz
 # untar the file
 tar zxvf spark-1.4.1-bin-hadoop2.6.tgz
